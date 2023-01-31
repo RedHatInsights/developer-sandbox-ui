@@ -4,8 +4,8 @@ import {
   CardBody,
   Grid,
   GridItem,
-  TextContent,
   Text,
+  TextContent,
   TextVariants,
 } from '@patternfly/react-core';
 

@@ -9,7 +9,7 @@ const SandboxPage = () => {
   return (
     <>
       <TopBanner />
-      <Main className="pf-u-pt-xl pf-u-px-2xl pf-u-pb-2xl">
+      <Main className="pf-u-pt-xl pf-u-px-2xl-on-md pf-u-px-0-on-xs  pf-u-pb-2xl">
         <DescriptionCard />
         <PurchaseCard />
       </Main>
