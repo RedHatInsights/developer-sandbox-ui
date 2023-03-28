@@ -34,7 +34,8 @@ const TopBanner = () => (
       <Button
         className="pf-u-mt-2xl"
         component="a"
-        href="https://developers.redhat.com/developer-sandbox/get-started"
+        href="https://developers.redhat.com/developer-sandbox"
+        target="_blank"
         isLarge
       >
         Learn more about Sandbox for Red Hat OpenShift
