@@ -10,7 +10,10 @@ import {
 import '../../Routes/SandboxPage/SandboxPage.scss';
 
 const TopBanner = () => (
-  <Card className="sbx-c-card-banner pf-u-px-lg pf-u-pt-sm pf-u-pb-sm" isPlain>
+  <Card
+    className="sbx-c-card-banner pf-u-px-lg-on-md pf-u-px-0-on-sm pf-u-pt-sm pf-u-pb-sm"
+    isPlain
+  >
     <CardBody className="pf-u-w-66-on-md">
       <TextContent>
         <Text
@@ -31,7 +34,8 @@ const TopBanner = () => (
       <Button
         className="pf-u-mt-2xl"
         component="a"
-        href="https://developers.redhat.com/developer-sandbox/get-started"
+        href="https://developers.redhat.com/developer-sandbox"
+        target="_blank"
         isLarge
       >
         Learn more about Sandbox for Red Hat OpenShift

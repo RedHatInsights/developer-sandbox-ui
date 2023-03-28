@@ -42,10 +42,10 @@ const PurchaseCard = () => {
                 variant="secondary"
                 onClick={(e) => {
                   e.preventDefault();
-                  push('./create/rosa/welcome');
+                  push('./openshift/create/rosa/welcome');
                 }}
                 className="pf-u-flex-grow-1 pf-u-mb-md pf-u-mb-0-on-lg"
-                href="/create/rosa/welcome"
+                href="/openshift/create/rosa/welcome"
                 isLarge
               >
                 Get Started
