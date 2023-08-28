@@ -12,6 +12,7 @@ export type RegistrationState = {
 
 // actions
 export type RegistrationActions = {
+  refreshSignupData: () => Promise<void>;
   setShowUserSignup: (showUserSignup: boolean) => void;
   setSignupData: (data: SignupData | undefined) => void;
   setError: (error: string | undefined) => void;

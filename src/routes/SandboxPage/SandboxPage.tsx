@@ -18,8 +18,7 @@ import { useRegistrationContext } from '../../hooks/useRegistrationContext';
 
 const SandboxPage = () => {
   const [{ status, error }] = useRegistrationContext();
-  const provisioning = status === 'provisioning';
-  const showOverview = status !== 'ready' && !provisioning;
+  const showOverview = status !== 'ready';
   return (
     <>
       <SandboxPageBanner />
@@ -48,16 +47,13 @@ const SandboxPage = () => {
             ) : (
               <>
                 <TextContent>
-                  <Text component={TextVariants.h1}>
-                    {provisioning ? 'Available service after provisioning' : 'Available services'}
-                  </Text>
+                  <Text component={TextVariants.h1}>Available services</Text>
                   <Text component={TextVariants.p}>
-                    {provisioning
-                      ? 'Your Sandbox account is waiting for provisioning. Once complete, these are all the cool things that are available to you.'
-                      : 'Now that your Sandbox is activated, these are all the cool things that are available to you, right in your Sandbox!'}
+                    Now that your Sandbox is activated, these are all the cool things that are
+                    available to you, right in your Sandbox!
                   </Text>
                 </TextContent>
-                <ServiceCatalog isDisabled={provisioning} />
+                <ServiceCatalog />
               </>
             )}
           </Flex>

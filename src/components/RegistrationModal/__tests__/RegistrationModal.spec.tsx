@@ -27,22 +27,8 @@ describe('RegistrationModal', () => {
     jest.useFakeTimers();
   });
 
-  it('should render the activate screen', () => {
-    render(<RegistrationModal onClose={() => null} initialStatus="new" />);
-    expect(screen.getByRole('button', { name: 'Activate' })).toBeDisabled();
-  });
-
-  it('should render the activate screen in ', () => {
-    render(<RegistrationModal onClose={() => null} initialStatus="new" />);
-    expect(screen.getByRole('button', { name: 'Activate' })).toBeDisabled();
-  });
-
   it('should render the activate button', () => {
     render(<RegistrationModal onClose={() => null} />);
-    expect(screen.getByRole('button', { name: 'Activate' })).toBeDisabled();
-
-    screen.getByRole('checkbox').click();
-
     expect(screen.getByRole('button', { name: 'Activate' })).not.toBeDisabled();
   });
 
@@ -59,7 +45,7 @@ describe('RegistrationModal', () => {
   it('should render the ready screen', () => {
     const onClose = jest.fn();
     render(<RegistrationModal onClose={onClose} initialStatus="ready" />);
-    const button = screen.getByRole('button', { name: 'Launch Sandbox' });
+    const button = screen.getByRole('button', { name: 'Got it' });
     expect(button).not.toBeDisabled();
     button.click();
     expect(onClose).toHaveBeenCalled();
@@ -78,7 +64,6 @@ describe('RegistrationModal', () => {
       },
     });
     render(<RegistrationModal onClose={() => null} />);
-    screen.getByRole('checkbox').click();
     screen.getByRole('button', { name: 'Activate' }).click();
     expect(signupMock).toHaveBeenCalled();
     await waitFor(() => {
@@ -89,9 +74,9 @@ describe('RegistrationModal', () => {
         ready: true,
       },
     });
-    jest.advanceTimersByTime(1000);
+    jest.advanceTimersByTime(2000);
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Launch Sandbox' })).not.toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Got it' })).not.toBeDisabled();
     });
   });
 
@@ -102,7 +87,6 @@ describe('RegistrationModal', () => {
       },
     });
     render(<RegistrationModal onClose={() => null} />);
-    screen.getByRole('checkbox').click();
     screen.getByRole('button', { name: 'Activate' }).click();
     expect(signupMock).toHaveBeenCalled();
     await waitFor(() => {
@@ -113,9 +97,9 @@ describe('RegistrationModal', () => {
         ready: true,
       },
     });
-    jest.advanceTimersByTime(1000);
+    jest.advanceTimersByTime(2000);
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Launch Sandbox' })).not.toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Got it' })).not.toBeDisabled();
     });
   });
 
@@ -127,7 +111,6 @@ describe('RegistrationModal', () => {
       },
     });
     render(<RegistrationModal onClose={() => null} />);
-    screen.getByRole('checkbox').click();
     screen.getByRole('button', { name: 'Activate' }).click();
     expect(signupMock).toHaveBeenCalled();
     await waitFor(() => {
@@ -179,7 +162,7 @@ describe('RegistrationModal', () => {
       },
     });
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Launch Sandbox' })).not.toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Got it' })).not.toBeDisabled();
     });
   });
 });

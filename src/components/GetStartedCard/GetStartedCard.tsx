@@ -1,5 +1,8 @@
 import * as React from 'react';
 import {
+  Alert,
+  AlertActionCloseButton,
+  AlertVariant,
   ButtonVariant,
   Card,
   CardBody,
@@ -13,6 +16,9 @@ import CheckIcon from '@patternfly/react-icons/dist/esm/icons/check-icon';
 import heroImg from '../../images/sandbox-hero-graphic.svg';
 import { useRegistrationContext } from '../../hooks/useRegistrationContext';
 import AnalyticsButton from '../AnalyticsButton/AnalyticsButton';
+import { signup } from '../../services/registration-service';
+import { errorMessage } from '../../utils/utils';
+import { Status } from '../../utils/registration-context';
 
 const PrimaryCheckIcon = () => (
   <CheckIcon
@@ -22,8 +28,15 @@ const PrimaryCheckIcon = () => (
   />
 );
 
+const STATUS_TITLE: { [key in Status]?: string } = {
+  'pending-approval': 'Pending approval',
+  provisioning: 'Preparing your Sandbox',
+};
+
 const GetStartedCard = () => {
-  const [state, { setShowUserSignup }] = useRegistrationContext();
+  const [error, setError] = React.useState<string | undefined>();
+  const [loading, setLoading] = React.useState(false);
+  const [state, { setShowUserSignup, refreshSignupData }] = useRegistrationContext();
   return (
     <>
       <Card>
@@ -64,15 +77,44 @@ const GetStartedCard = () => {
                   browser.
                 </ListItem>
               </List>
+              {error ? (
+                <Alert
+                  title="An error occurred"
+                  variant={AlertVariant.danger}
+                  actionClose={<AlertActionCloseButton onClose={() => setError(undefined)} />}
+                  isInline
+                  className="pf-u-mb-lg"
+                >
+                  {error}
+                </Alert>
+              ) : null}
               <AnalyticsButton
-                isDisabled={state.status === 'pending-approval'}
-                onClick={() => setShowUserSignup(true)}
+                isDisabled={
+                  loading || state.status === 'pending-approval' || state.status === 'provisioning'
+                }
+                isLoading={loading || state.status === 'provisioning'}
+                onClick={async () => {
+                  if (state.status === 'new') {
+                    try {
+                      setError(undefined);
+                      setLoading(true);
+                      await signup();
+                      await refreshSignupData();
+                    } catch (e) {
+                      setError(errorMessage(e));
+                    } finally {
+                      setLoading(false);
+                    }
+                  } else {
+                    setShowUserSignup(true);
+                  }
+                }}
                 className="pf-u-w-100 pf-u-w-initial-on-sm"
                 analytics={{
                   event: 'DevSandbox Signup Start',
                 }}
               >
-                {state.status === 'pending-approval' ? 'Pending approval' : 'Get started'}
+                {STATUS_TITLE[state.status] || 'Get started'}
               </AnalyticsButton>
               <AnalyticsButton
                 variant={ButtonVariant.link}

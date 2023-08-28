@@ -6,7 +6,6 @@ import {
   Bullseye,
   Button,
   ButtonVariant,
-  Checkbox,
   Form,
   FormGroup,
   Grid,
@@ -19,7 +18,6 @@ import {
   TextVariants,
   Title,
 } from '@patternfly/react-core';
-import { ExternalLinkAltIcon } from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
 import { CheckIcon } from '@patternfly/react-icons/dist/esm/icons/check-icon';
 import FooterButton from './FooterButton';
 import {
@@ -31,12 +29,12 @@ import {
   signup,
 } from '../../services/registration-service';
 import sandboxReadyImg from '../../images/launch-sandbox-success.svg';
-import { useRecaptcha } from '../../hooks/useRecaptcha';
 import { errorMessage } from '../../utils/utils';
 import { SignupData } from '../../types';
 import { Status } from '../../utils/registration-context';
 import { useTrackEvent } from '../../hooks/useTrackEvent';
 import AnalyticsButton from '../AnalyticsButton/AnalyticsButton';
+import { SHORT_INTERVAL } from '../../utils/const';
 
 type Props = {
   initialStatus?: Status;
@@ -44,20 +42,17 @@ type Props = {
 };
 
 const RegistrationModal = ({ onClose, initialStatus }: Props) => {
-  useRecaptcha();
-
   const track = useTrackEvent();
 
   const [step, setStep] = React.useState<
     'new' | 'ready' | 'provisioning' | 'verify' | 'verifyCode' | 'pending-approval'
   >(initialStatus && initialStatus !== 'unknown' ? initialStatus : 'new');
-  const [error, setError] = React.useState<string>();
+  const [error, setError] = React.useState<string | undefined>();
   const [verifyCode, setVerifyCode] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [countryCode, setCountryCode] = React.useState('');
   const [phoneNumber, setPhoneNumber] = React.useState('');
   const [codeResent, setCodeResent] = React.useState(false);
-  const [accepted, setAccepted] = React.useState(false);
 
   const [signupData, setSignupDataState] = React.useState<SignupData>();
 
@@ -83,7 +78,7 @@ const RegistrationModal = ({ onClose, initialStatus }: Props) => {
 
   React.useEffect(() => {
     if (step === 'provisioning' || step === 'pending-approval') {
-      const handle = setInterval(getSignupDataFn, 1000);
+      const handle = setInterval(getSignupDataFn, SHORT_INTERVAL);
       return () => {
         clearInterval(handle);
       };
@@ -135,57 +130,24 @@ const RegistrationModal = ({ onClose, initialStatus }: Props) => {
         switch (step) {
           case 'new':
             return (
-              <>
-                <TextContent>
-                  <Text component={TextVariants.p}>
-                    Join the vibrant community of Red Hat Developer Tools program. The free annual
-                    subscription provides access to developer resources such as Red Hat software
-                    downloads, ebooks, interactive tutorials, and interactive events with Red Hat
-                    experts.
-                  </Text>
-                </TextContent>
-                <div className="pf-u-pt-lg pf-u-pt-md pf-u-text-align-center">
-                  <Checkbox
-                    aria-label="Join the Red Hat Developers program"
-                    id="accept-join"
-                    isChecked={accepted}
-                    onChange={(checked) => {
-                      setError(undefined);
-                      setAccepted(checked);
-                    }}
-                    className="pf-u-mr-sm"
-                  />
-                  Join the{' '}
-                  <Button
-                    variant={ButtonVariant.link}
-                    isInline
-                    component="a"
-                    href="https://developers.redhat.com/about"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    Red Hat Developers program <ExternalLinkAltIcon />
-                  </Button>
-                </div>
-                <FooterButton
-                  isDisabled={loading || !accepted}
-                  isLoading={loading}
-                  onClick={async () => {
-                    try {
-                      setError(undefined);
-                      setLoading(true);
-                      await signup();
-                      await getSignupDataFn();
-                    } catch (e) {
-                      setError(errorMessage(e));
-                    } finally {
-                      setLoading(false);
-                    }
-                  }}
-                >
-                  Activate
-                </FooterButton>
-              </>
+              <FooterButton
+                isDisabled={loading}
+                isLoading={loading}
+                onClick={async () => {
+                  try {
+                    setError(undefined);
+                    setLoading(true);
+                    await signup();
+                    await getSignupDataFn();
+                  } catch (e) {
+                    setError(errorMessage(e));
+                  } finally {
+                    setLoading(false);
+                  }
+                }}
+              >
+                Activate
+              </FooterButton>
             );
           case 'verify':
             return (
@@ -247,6 +209,7 @@ const RegistrationModal = ({ onClose, initialStatus }: Props) => {
                   isDisabled={
                     loading || !isValidCountryCode(countryCode) || !isValidPhoneNumber(phoneNumber)
                   }
+                  isLoading={loading}
                   onClick={async () => {
                     try {
                       setError(undefined);
@@ -334,6 +297,7 @@ const RegistrationModal = ({ onClose, initialStatus }: Props) => {
                 </TextContent>
                 <FooterButton
                   isDisabled={loading || verifyCode.length !== 6}
+                  isLoading={loading}
                   onClick={async () => {
                     try {
                       setError(undefined);
@@ -393,7 +357,7 @@ const RegistrationModal = ({ onClose, initialStatus }: Props) => {
                 <div className="pf-u-p-md">
                   <img src={sandboxReadyImg} />
                 </div>
-                <FooterButton onClick={() => onClose(signupData)}>Launch Sandbox</FooterButton>
+                <FooterButton onClick={() => onClose(signupData)}>Got it</FooterButton>
               </>
             );
           default:
