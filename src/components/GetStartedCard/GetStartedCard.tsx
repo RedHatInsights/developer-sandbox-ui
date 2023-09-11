@@ -1,22 +1,24 @@
 import * as React from 'react';
-import { Alert } from '@patternfly/react-core/dist/dynamic/components/Alert';
-import { AlertActionCloseButton } from '@patternfly/react-core/dist/dynamic/components/Alert';
-import { AlertVariant } from '@patternfly/react-core/dist/dynamic/components/Alert';
-import { ButtonVariant } from '@patternfly/react-core/dist/dynamic/components/Button';
-import { Card } from '@patternfly/react-core/dist/dynamic/components/Card';
-import { CardBody } from '@patternfly/react-core/dist/dynamic/components/Card';
-import { Grid } from '@patternfly/react-core/dist/dynamic/layouts/Grid';
-import { GridItem } from '@patternfly/react-core/dist/dynamic/layouts/Grid';
-import { List } from '@patternfly/react-core/dist/dynamic/components/List';
-import { ListItem } from '@patternfly/react-core/dist/dynamic/components/List';
-import { Title } from '@patternfly/react-core/dist/dynamic/components/Title';
+import {
+  Alert,
+  AlertActionCloseButton,
+  AlertVariant,
+  ButtonVariant,
+  Card,
+  CardBody,
+  Grid,
+  GridItem,
+  List,
+  ListItem,
+  Title,
+} from '@patternfly/react-core';
 import CheckIcon from '@patternfly/react-icons/dist/esm/icons/check-icon';
 import heroImg from '../../images/sandbox-hero-graphic.svg';
 import { useRegistrationContext } from '../../hooks/useRegistrationContext';
 import AnalyticsButton from '../AnalyticsButton/AnalyticsButton';
+import { signup } from '../../services/registration-service';
 import { errorMessage } from '../../utils/utils';
 import { Status } from '../../utils/registration-context';
-import useRegistrationService from '../../hooks/useRegistrationService';
 
 const PrimaryCheckIcon = () => (
   <CheckIcon
@@ -32,7 +34,6 @@ const STATUS_TITLE: { [key in Status]?: string } = {
 };
 
 const GetStartedCard = () => {
-  const { signup } = useRegistrationService();
   const [error, setError] = React.useState<string | undefined>();
   const [loading, setLoading] = React.useState(false);
   const [state, { setShowUserSignup, refreshSignupData }] = useRegistrationContext();

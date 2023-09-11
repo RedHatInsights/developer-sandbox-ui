@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { renderHook } from '@testing-library/react';
+import { renderHook } from '@testing-library/react-hooks';
 import { useChrome } from '@redhat-cloud-services/frontend-components/useChrome';
 import { useTrackEvent } from '../useTrackEvent';
 

@@ -1,4 +1,5 @@
-import axios, { AxiosInstance } from 'axios';
+import { axiosInstance } from './axios-instance';
+import axios from 'axios';
 import { recaptchaApiKey } from '../utils/recaptcha';
 import { SignupData } from '../types';
 
@@ -8,9 +9,7 @@ const signupURL = '/api/v1/signup';
 // phone verification endpoint
 const phoneVerificationURL = '/api/v1/signup/verification';
 
-export const getSignupData = async (
-  axiosInstance: AxiosInstance,
-): Promise<SignupData | undefined> => {
+export const getSignupData = async (): Promise<SignupData | undefined> => {
   try {
     const { data } = await axiosInstance.get<SignupData>(signupURL);
     return data;
@@ -53,7 +52,7 @@ const getRecaptchaToken = async (): Promise<string> => {
   });
 };
 
-export const signup = async (axiosInstance: AxiosInstance) => {
+export const signup = async () => {
   const token = await getRecaptchaToken();
   await axiosInstance.post(signupURL, null, {
     headers: {
@@ -62,11 +61,7 @@ export const signup = async (axiosInstance: AxiosInstance) => {
   });
 };
 
-export const initiatePhoneVerification = async (
-  axiosInstance: AxiosInstance,
-  countryCode: string,
-  phoneNumber: string,
-) => {
+export const initiatePhoneVerification = async (countryCode: string, phoneNumber: string) => {
   if (!isValidCountryCode(countryCode)) {
     throw 'Invalid country code.';
   }
@@ -79,7 +74,7 @@ export const initiatePhoneVerification = async (
   });
 };
 
-export const completePhoneVerification = async (axiosInstance: AxiosInstance, code: string) => {
+export const completePhoneVerification = async (code: string) => {
   await axiosInstance.get(`${phoneVerificationURL}/${code}`);
 };
 

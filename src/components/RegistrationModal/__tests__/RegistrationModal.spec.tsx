@@ -1,35 +1,30 @@
 import * as React from 'react';
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import useRegistrationService from '../../../hooks/useRegistrationService';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import RegistrationModal from '../RegistrationModal';
+import {
+  completePhoneVerification,
+  getSignupData,
+  initiatePhoneVerification,
+  signup,
+} from '../../../services/registration-service';
 
-jest.mock('../../../hooks/useRegistrationService', () => {
-  const mock = {
-    completePhoneVerification: jest.fn(),
-    initiatePhoneVerification: jest.fn(),
-    getSignupData: jest.fn(),
-    signup: jest.fn(),
-  };
+jest.mock('../../../services/registration-service', () => {
+  const actual = jest.requireActual('../../../services/registration-service');
   return {
-    __esModule: true,
-    default: () => mock,
+    ...actual,
+    completePhoneVerification: jest.fn(),
+    getSignupData: jest.fn(),
+    initiatePhoneVerification: jest.fn(),
+    signup: jest.fn(),
   };
 });
 
-describe('RegistrationModal', () => {
-  let completePhoneVerificationMock: jest.Mock;
-  let initiatePhoneVerificationMock: jest.Mock;
-  let getSignupDataMock: jest.Mock;
-  let signupMock: jest.Mock;
+const getSignupDataMock = getSignupData as jest.Mock;
+const signupMock = signup as jest.Mock;
 
+describe('RegistrationModal', () => {
   beforeEach(() => {
     jest.useFakeTimers();
-    jest.resetAllMocks();
-    const service = useRegistrationService();
-    completePhoneVerificationMock = service.completePhoneVerification as jest.Mock;
-    initiatePhoneVerificationMock = service.initiatePhoneVerification as jest.Mock;
-    getSignupDataMock = service.getSignupData as jest.Mock;
-    signupMock = service.signup as jest.Mock;
   });
 
   it('should render the activate button', () => {
@@ -69,9 +64,7 @@ describe('RegistrationModal', () => {
       },
     });
     render(<RegistrationModal onClose={() => null} />);
-    act(() => {
-      screen.getByRole('button', { name: 'Activate' }).click();
-    });
+    screen.getByRole('button', { name: 'Activate' }).click();
     expect(signupMock).toHaveBeenCalled();
     await waitFor(() => {
       expect(screen.getByRole('button', { name: 'Launch Sandbox' })).toBeDisabled();
@@ -94,12 +87,9 @@ describe('RegistrationModal', () => {
       },
     });
     render(<RegistrationModal onClose={() => null} />);
-    act(() => {
-      screen.getByRole('button', { name: 'Activate' }).click();
-    });
+    screen.getByRole('button', { name: 'Activate' }).click();
     expect(signupMock).toHaveBeenCalled();
     await waitFor(() => {
-      expect(screen.getAllByRole('button', { name: 'Close' })).toHaveLength(2);
       expect(screen.getAllByRole('button', { name: 'Close' }).reverse()[0]).not.toBeDisabled();
     });
     getSignupDataMock.mockReturnValue({
@@ -121,14 +111,20 @@ describe('RegistrationModal', () => {
       },
     });
     render(<RegistrationModal onClose={() => null} />);
-    act(() => {
-      screen.getByRole('button', { name: 'Activate' }).click();
-    });
+    screen.getByRole('button', { name: 'Activate' }).click();
     expect(signupMock).toHaveBeenCalled();
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getAllByRole('button', { name: 'Close' }).reverse()[0]).not.toBeDisabled();
+    });
+    getSignupDataMock.mockReturnValue({
+      status: {
+        ready: true,
+      },
     });
 
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();
+    });
     const countryCodeInput = screen.getByLabelText('Country code');
     const phoneInput = screen.getByLabelText('Phone number');
 
@@ -140,11 +136,9 @@ describe('RegistrationModal', () => {
 
     expect(verifyNextButton).not.toBeDisabled();
 
-    act(() => {
-      verifyNextButton.click();
-    });
+    verifyNextButton.click();
 
-    expect(initiatePhoneVerificationMock).toHaveBeenCalledWith('1', '1231231234');
+    expect(initiatePhoneVerification).toHaveBeenCalledWith('1', '1231231234');
 
     await waitFor(() => {
       expect(screen.getByText(/We sent a verification code to/)).toBeInTheDocument();
@@ -158,11 +152,9 @@ describe('RegistrationModal', () => {
 
     expect(verifyCodeNextButton).not.toBeDisabled();
 
-    act(() => {
-      verifyCodeNextButton.click();
-    });
+    verifyCodeNextButton.click();
 
-    expect(completePhoneVerificationMock).toHaveBeenCalledWith('123456');
+    expect(completePhoneVerification).toHaveBeenCalledWith('123456');
 
     getSignupDataMock.mockReturnValue({
       status: {

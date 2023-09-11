@@ -5,18 +5,17 @@ import {
   RegistrationContextValue,
   signupDataToStatus,
 } from '../utils/registration-context';
+import { getSignupData } from '../services/registration-service';
 import RegistrationModal from './RegistrationModal/RegistrationModal';
 import { SignupData } from '../types';
 import { errorMessage } from '../utils/utils';
 import { useTrackEvent } from '../hooks/useTrackEvent';
 import { useRecaptcha } from '../hooks/useRecaptcha';
 import { LONG_INTERVAL, SHORT_INTERVAL } from '../utils/const';
-import useRegistrationService from '../hooks/useRegistrationService';
 
 const RegistrationProvider = ({ children }: { children?: React.ReactNode }) => {
   useRecaptcha();
   const track = useTrackEvent();
-  const { getSignupData } = useRegistrationService();
 
   // state
   const [statusUnknown, setStatusUnknown] = React.useState(true);

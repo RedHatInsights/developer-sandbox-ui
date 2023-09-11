@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Button } from '@patternfly/react-core/dist/dynamic/components/Button';
+import { Button, ButtonProps } from '@patternfly/react-core';
 import { AnalyticProps, useTrackEvent } from '../../hooks/useTrackEvent';
 
 const AnalyticsButton: React.FC<
-  React.ComponentProps<typeof Button> & {
+  ButtonProps & {
     analytics?: AnalyticProps;
   }
 > = ({ onClick, analytics, ...props }) => {

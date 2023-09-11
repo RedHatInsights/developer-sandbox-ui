@@ -11,14 +11,15 @@ module.exports = {
    * Add additional webpack plugins
    */
   plugins: [],
-  hotReload: process.env.HOT === 'true',
+  _unstableHotReload: process.env.HOT === 'true',
   moduleFederation: {
     exclude: ['react-router-dom'],
     shared: [
       {
         'react-router-dom': {
           singleton: true,
-          version: '^6.8.0',
+          import: false,
+          requiredVersion: '^6.3.0',
         },
       },
     ],

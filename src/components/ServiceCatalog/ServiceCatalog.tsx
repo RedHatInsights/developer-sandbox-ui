@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Gallery } from '@patternfly/react-core/dist/dynamic/layouts/Gallery';
-import { GalleryItem } from '@patternfly/react-core/dist/dynamic/layouts/Gallery';
+import { Gallery, GalleryItem } from '@patternfly/react-core';
 import { useSandboxServices } from '../../hooks/useSandboxServices';
 import ServiceCard from './ServiceCard';
 
