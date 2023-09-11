@@ -13,7 +13,7 @@ const ServiceCatalog = ({ isDisabled }: Props) => {
   return (
     <Gallery hasGutter minWidths={{ default: '330px' }}>
       {services.map((service) => (
-        <GalleryItem key={service.title}>
+        <GalleryItem key={service.id}>
           <ServiceCard {...service} launchUrl={isDisabled ? undefined : service.launchUrl} />
         </GalleryItem>
       ))}
