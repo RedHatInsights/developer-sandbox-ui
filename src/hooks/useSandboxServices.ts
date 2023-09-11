@@ -5,6 +5,7 @@ import devSpacesUrl from '../images/Product_Icon-Red_Hat-OpenShift_Dev_Spaces-RG
 import { useRegistrationContext } from './useRegistrationContext';
 
 export type Service = {
+  id: string;
   title: string;
   subtitle: string;
   description: string;
@@ -18,6 +19,7 @@ export const useSandboxServices = () => {
   return React.useMemo<Service[]>(
     () => [
       {
+        id: 'red-hat-openshift',
         title: 'Red Hat',
         subtitle: 'OpenShift',
         description:
@@ -30,6 +32,7 @@ export const useSandboxServices = () => {
             : signupData?.consoleURL,
       },
       {
+        id: 'red-hat-dev-spaces',
         title: 'Red Hat',
         subtitle: 'Dev Spaces',
         description:
@@ -39,6 +42,7 @@ export const useSandboxServices = () => {
         launchUrl: signupData?.cheDashboardURL,
       },
       {
+        id: 'red-hat-data-science',
         title: 'Red Hat',
         subtitle: 'Data Science',
         description:
