@@ -36,6 +36,8 @@ const GetStartedCard = () => {
   const [error, setError] = React.useState<string | undefined>();
   const [loading, setLoading] = React.useState(false);
   const [state, { setShowUserSignup, refreshSignupData }] = useRegistrationContext();
+  const isButtonDisabled =
+    loading || state.status === 'pending-approval' || state.status === 'provisioning';
   return (
     <>
       <Card>
@@ -88,10 +90,8 @@ const GetStartedCard = () => {
                 </Alert>
               ) : null}
               <AnalyticsButton
-                isDisabled={
-                  loading || state.status === 'pending-approval' || state.status === 'provisioning'
-                }
-                isLoading={loading || state.status === 'provisioning'}
+                isDisabled={isButtonDisabled}
+                isLoading={isButtonDisabled}
                 onClick={async () => {
                   if (state.status === 'new') {
                     try {
