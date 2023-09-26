@@ -1,15 +1,13 @@
 import React from 'react';
-import {
-  Alert,
-  AlertVariant,
-  Bullseye,
-  Flex,
-  PageSection,
-  Spinner,
-  Text,
-  TextContent,
-  TextVariants,
-} from '@patternfly/react-core';
+import { Alert } from '@patternfly/react-core/dist/dynamic/components/Alert';
+import { AlertVariant } from '@patternfly/react-core/dist/dynamic/components/Alert';
+import { Bullseye } from '@patternfly/react-core/dist/dynamic/layouts/Bullseye';
+import { Flex } from '@patternfly/react-core/dist/dynamic/layouts/Flex';
+import { PageSection } from '@patternfly/react-core/dist/dynamic/components/Page';
+import { Spinner } from '@patternfly/react-core/dist/dynamic/components/Spinner';
+import { Text } from '@patternfly/react-core/dist/dynamic/components/Text';
+import { TextContent } from '@patternfly/react-core/dist/dynamic/components/Text';
+import { TextVariants } from '@patternfly/react-core/dist/dynamic/components/Text';
 import SandboxPageBanner from '../../components/PageBanner/SandboxPageBanner';
 import HowItWorksCard from '../../components/HowItWorksCard/HowItWorksCard';
 import GetStartedCard from '../../components/GetStartedCard/GetStartedCard';

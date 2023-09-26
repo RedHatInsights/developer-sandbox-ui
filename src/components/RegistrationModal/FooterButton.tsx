@@ -1,4 +1,4 @@
-import { Button } from '@patternfly/react-core';
+import { Button } from '@patternfly/react-core/dist/dynamic/components/Button';
 import * as React from 'react';
 
 const FooterButton = (

@@ -1,33 +1,24 @@
 import * as React from 'react';
-import {
-  Alert,
-  AlertActionCloseButton,
-  AlertVariant,
-  Bullseye,
-  Button,
-  ButtonVariant,
-  Form,
-  FormGroup,
-  Grid,
-  GridItem,
-  Modal,
-  Spinner,
-  Text,
-  TextContent,
-  TextInput,
-  TextVariants,
-  Title,
-} from '@patternfly/react-core';
+import { Alert } from '@patternfly/react-core/dist/dynamic/components/Alert';
+import { AlertActionCloseButton } from '@patternfly/react-core/dist/dynamic/components/Alert';
+import { AlertVariant } from '@patternfly/react-core/dist/dynamic/components/Alert';
+import { Bullseye } from '@patternfly/react-core/dist/dynamic/layouts/Bullseye';
+import { Button } from '@patternfly/react-core/dist/dynamic/components/Button';
+import { ButtonVariant } from '@patternfly/react-core/dist/dynamic/components/Button';
+import { Form } from '@patternfly/react-core/dist/dynamic/components/Form';
+import { FormGroup } from '@patternfly/react-core/dist/dynamic/components/Form';
+import { Grid } from '@patternfly/react-core/dist/dynamic/layouts/Grid';
+import { GridItem } from '@patternfly/react-core/dist/dynamic/layouts/Grid';
+import { Modal } from '@patternfly/react-core/dist/dynamic/components/Modal';
+import { Spinner } from '@patternfly/react-core/dist/dynamic/components/Spinner';
+import { Text } from '@patternfly/react-core/dist/dynamic/components/Text';
+import { TextContent } from '@patternfly/react-core/dist/dynamic/components/Text';
+import { TextInput } from '@patternfly/react-core/dist/dynamic/components/TextInput';
+import { TextVariants } from '@patternfly/react-core/dist/dynamic/components/Text';
+import { Title } from '@patternfly/react-core/dist/dynamic/components/Title';
 import { CheckIcon } from '@patternfly/react-icons/dist/esm/icons/check-icon';
 import FooterButton from './FooterButton';
-import {
-  completePhoneVerification,
-  getSignupData,
-  initiatePhoneVerification,
-  isValidCountryCode,
-  isValidPhoneNumber,
-  signup,
-} from '../../services/registration-service';
+import { isValidCountryCode, isValidPhoneNumber } from '../../services/registration-service';
 import sandboxReadyImg from '../../images/launch-sandbox-success.svg';
 import { errorMessage } from '../../utils/utils';
 import { SignupData } from '../../types';
@@ -35,6 +26,7 @@ import { Status } from '../../utils/registration-context';
 import { useTrackEvent } from '../../hooks/useTrackEvent';
 import AnalyticsButton from '../AnalyticsButton/AnalyticsButton';
 import { SHORT_INTERVAL } from '../../utils/const';
+import useRegistrationService from '../../hooks/useRegistrationService';
 
 type Props = {
   initialStatus?: Status;
@@ -43,6 +35,9 @@ type Props = {
 
 const RegistrationModal = ({ onClose, initialStatus }: Props) => {
   const track = useTrackEvent();
+
+  const { completePhoneVerification, getSignupData, initiatePhoneVerification, signup } =
+    useRegistrationService();
 
   const [step, setStep] = React.useState<
     'new' | 'ready' | 'provisioning' | 'verify' | 'verifyCode' | 'pending-approval'
@@ -176,7 +171,7 @@ const RegistrationModal = ({ onClose, initialStatus }: Props) => {
                           minLength={1}
                           maxLength={4}
                           value={countryCode}
-                          onChange={(value) => {
+                          onChange={(_, value) => {
                             setError(undefined);
                             setCountryCode(value);
                           }}
@@ -196,7 +191,7 @@ const RegistrationModal = ({ onClose, initialStatus }: Props) => {
                           minLength={6}
                           maxLength={32}
                           value={phoneNumber}
-                          onChange={(value) => {
+                          onChange={(_, value) => {
                             setError(undefined);
                             setPhoneNumber(value);
                           }}
@@ -248,7 +243,7 @@ const RegistrationModal = ({ onClose, initialStatus }: Props) => {
                       maxLength={6}
                       placeholder="XXXXXX"
                       value={verifyCode || ''}
-                      onChange={(value) => {
+                      onChange={(_, value) => {
                         setError(undefined);
                         setCodeResent(false);
                         setVerifyCode(value);
@@ -327,7 +322,7 @@ const RegistrationModal = ({ onClose, initialStatus }: Props) => {
                   </Text>
                 </TextContent>
                 <Bullseye className="pf-u-mt-2xl pf-u-mb-lg">
-                  <Spinner isSVG size="xl" />
+                  <Spinner size="xl" />
                 </Bullseye>
                 <FooterButton isDisabled>Launch Sandbox</FooterButton>
               </>
@@ -340,7 +335,7 @@ const RegistrationModal = ({ onClose, initialStatus }: Props) => {
                   <p>Your Sandbox account is waiting for approval.</p>
                 </TextContent>
                 <Bullseye className="pf-u-mt-2xl pf-u-mb-lg">
-                  <Spinner isSVG size="xl" />
+                  <Spinner size="xl" />
                 </Bullseye>
                 <FooterButton onClick={() => onClose(signupData)}>Close</FooterButton>
               </>

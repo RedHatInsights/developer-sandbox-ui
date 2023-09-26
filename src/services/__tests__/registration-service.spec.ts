@@ -1,4 +1,3 @@
-import { axiosInstance } from '../axios-instance';
 import {
   completePhoneVerification,
   getSignupData,
@@ -6,12 +5,17 @@ import {
   signup,
 } from '../registration-service';
 import { recaptchaApiKey } from '../../utils/recaptcha';
+import { AxiosInstance } from 'axios';
 
-jest.mock('../axios-instance');
+const getMock = jest.fn() as jest.Mock;
+const putMock = jest.fn() as jest.Mock;
+const postMock = jest.fn() as jest.Mock;
 
-const getMock = axiosInstance.get as jest.Mock;
-const putMock = axiosInstance.put as jest.Mock;
-const postMock = axiosInstance.post as jest.Mock;
+const axiosInstance = {
+  get: getMock,
+  put: putMock,
+  post: postMock,
+} as unknown as AxiosInstance;
 
 describe('registration-service', () => {
   afterEach(() => {
@@ -24,7 +28,7 @@ describe('registration-service', () => {
         foo: 'bar',
       };
       getMock.mockReturnValue({ data: mockData });
-      const data = await getSignupData();
+      const data = await getSignupData(axiosInstance);
       expect(getMock).toHaveBeenCalledWith('/api/v1/signup');
       expect(data).toEqual(mockData);
     });
@@ -38,7 +42,7 @@ describe('registration-service', () => {
           },
         };
       });
-      const data = await getSignupData();
+      const data = await getSignupData(axiosInstance);
       expect(getMock).toHaveBeenCalledWith('/api/v1/signup');
       expect(data).toBeUndefined();
     });
@@ -51,20 +55,22 @@ describe('registration-service', () => {
       getMock.mockImplementation(() => {
         throw error;
       });
-      expect(() => getSignupData()).rejects.toBe(error);
+      expect(() => getSignupData(axiosInstance)).rejects.toBe(error);
     });
   });
 
   describe('initiatePhoneVerification', () => {
     it('should reject invalid country code and phone number', () => {
-      expect(() => initiatePhoneVerification('invalid', '123 123 1234')).rejects.toBe(
-        'Invalid country code.',
+      expect(() =>
+        initiatePhoneVerification(axiosInstance, 'invalid', '123 123 1234'),
+      ).rejects.toBe('Invalid country code.');
+      expect(() => initiatePhoneVerification(axiosInstance, '1', 'invalid')).rejects.toBe(
+        'Invalid phone number.',
       );
-      expect(() => initiatePhoneVerification('1', 'invalid')).rejects.toBe('Invalid phone number.');
     });
 
     it('should initiate phone verification', async () => {
-      const data = await initiatePhoneVerification('1', '123 123 1234');
+      const data = await initiatePhoneVerification(axiosInstance, '1', '123 123 1234');
       expect(putMock).toHaveBeenCalledWith('/api/v1/signup/verification', {
         country_code: '1',
         phone_number: '123 123 1234',
@@ -80,7 +86,9 @@ describe('registration-service', () => {
       putMock.mockImplementation(() => {
         throw error;
       });
-      expect(() => initiatePhoneVerification('1', '123 123 1234')).rejects.toBe(error);
+      expect(() => initiatePhoneVerification(axiosInstance, '1', '123 123 1234')).rejects.toBe(
+        error,
+      );
       expect(putMock).toHaveBeenCalledWith('/api/v1/signup/verification', {
         country_code: '1',
         phone_number: '123 123 1234',
@@ -89,7 +97,7 @@ describe('registration-service', () => {
 
     describe('completePhoneVerification', () => {
       it('should complete phone verification', async () => {
-        await completePhoneVerification('12345');
+        await completePhoneVerification(axiosInstance, '12345');
         expect(getMock).toHaveBeenCalledWith('/api/v1/signup/verification/12345');
       });
 
@@ -101,7 +109,7 @@ describe('registration-service', () => {
         getMock.mockImplementation(() => {
           throw error;
         });
-        expect(() => completePhoneVerification('12345')).rejects.toBe(error);
+        expect(() => completePhoneVerification(axiosInstance, '12345')).rejects.toBe(error);
         expect(getMock).toHaveBeenCalledWith('/api/v1/signup/verification/12345');
       });
     });
@@ -114,7 +122,7 @@ describe('registration-service', () => {
             execute: jest.fn(async () => 'test-token'),
           },
         };
-        await signup();
+        await signup(axiosInstance);
         expect(window.grecaptcha.enterprise.ready).toHaveBeenCalled();
         expect(window.grecaptcha.enterprise.execute).toHaveBeenCalledWith(recaptchaApiKey, {
           action: 'SIGNUP',
@@ -135,7 +143,7 @@ describe('registration-service', () => {
             execute: jest.fn(async () => 'test-token'),
           },
         };
-        const promise = signup();
+        const promise = signup(axiosInstance);
         expect(window.grecaptcha.enterprise.ready).toHaveBeenCalled();
         expect(window.grecaptcha.enterprise.execute).not.toHaveBeenCalled();
 
@@ -153,7 +161,7 @@ describe('registration-service', () => {
         postMock.mockImplementation(() => {
           throw error;
         });
-        expect(() => signup()).rejects.toBe(error);
+        expect(() => signup(axiosInstance)).rejects.toBe(error);
       });
     });
   });
