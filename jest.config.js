@@ -1,6 +1,6 @@
 module.exports = {
-  collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.js', '!src/**/stories/*'],
+  collectCoverage: false,
+  collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
   coverageDirectory: './coverage/',
   moduleNameMapper: {
     '\\.(css|scss)$': 'identity-obj-proxy',
@@ -8,7 +8,9 @@ module.exports = {
       '<rootDir>/config/fileMock.js',
   },
   roots: ['<rootDir>/src/'],
-  transformIgnorePatterns: ['/node_modules/(?!@redhat-cloud-services|@patternfly)'],
+  transformIgnorePatterns: [
+    '<rootDir>/node_modules/(?!(lodash-es|@redhat-cloud-services|@openshift|@patternfly|uuid))',
+  ],
   testEnvironment: 'jest-environment-jsdom',
   moduleDirectories: [
     'node_modules',

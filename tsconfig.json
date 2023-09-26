@@ -9,24 +9,13 @@
     "strict": true,
     "rootDir": ".",
     "skipLibCheck": true,
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "lib": ["dom", "esnext"],
     "module": "esnext",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "typeRoots": ["node_modules/@types", "@types"]
   },
-  "include": [
-    "./src/**/*.ts",
-    "./src/**/*.tsx",
-    "./@types"
-  ],
-  "exclude": [
-    "./src/entry.ts",
-    "./*.js",
-    "./*.d.ts"
-  ]
+  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./@types"],
+  "exclude": ["./src/entry.ts", "./*.js", "./*.d.ts"]
 }

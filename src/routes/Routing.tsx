@@ -1,6 +1,7 @@
 import React, { Suspense, lazy, useMemo } from 'react';
 import { Navigate, Route as RouterRoute, Routes as RouterRoutes } from 'react-router-dom';
-import { Bullseye, Spinner } from '@patternfly/react-core';
+import { Bullseye } from '@patternfly/react-core/dist/dynamic/layouts/Bullseye';
+import { Spinner } from '@patternfly/react-core/dist/dynamic/components/Spinner';
 import { linkBasename } from '../utils/utils';
 
 const SandboxPage = lazy(

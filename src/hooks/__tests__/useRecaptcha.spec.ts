@@ -1,5 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
-
+import { renderHook } from '@testing-library/react';
 import { useRecaptcha } from '../useRecaptcha';
 import { recaptchaApiKey } from '../../utils/recaptcha';
 

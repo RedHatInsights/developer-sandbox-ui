@@ -1,5 +1,9 @@
 import React from 'react';
-import { Card, CardBody, Text, TextContent, TextVariants } from '@patternfly/react-core';
+import { Card } from '@patternfly/react-core/dist/dynamic/components/Card';
+import { CardBody } from '@patternfly/react-core/dist/dynamic/components/Card';
+import { Text } from '@patternfly/react-core/dist/dynamic/components/Text';
+import { TextContent } from '@patternfly/react-core/dist/dynamic/components/Text';
+import { TextVariants } from '@patternfly/react-core/dist/dynamic/components/Text';
 import howItWorksImg from '../../images/2021_RHD__illustration_A.svg';
 
 import './HowItWorksCard.scss';
