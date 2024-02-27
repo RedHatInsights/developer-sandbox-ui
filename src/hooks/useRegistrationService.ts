@@ -4,10 +4,10 @@ import {
   initiatePhoneVerification,
   signup,
 } from '../services/registration-service';
-import useAxios from './useAxios';
+import useAxios, { InstanceAPI } from './useAxios';
 
 const useRegistrationService = () => {
-  const axiosInstance = useAxios();
+  const axiosInstance = useAxios(InstanceAPI.REGISTRATION);
 
   return {
     getSignupData: () => getSignupData(axiosInstance),

@@ -15,7 +15,7 @@
     "lint:sass": "stylelint 'src/**/*.scss' --config .stylelintrc.json",
     "patch:hosts": "fec patch-etc-hosts",
     "start": "HOT=true fec dev",
-    "test": "jest",
+    "test": "TZ=UTC jest --verbose --no-cache",
     "postinstall": "ts-patch install && rimraf .cache",
     "verify": "npm-run-all build lint test"
   },
@@ -28,6 +28,7 @@
     "@redhat-cloud-services/frontend-components-utilities": "^4.0.0",
     "axios": "^0.27.2",
     "classnames": "^2.3.2",
+    "jotai": "^2.6.4",
     "lodash-es": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

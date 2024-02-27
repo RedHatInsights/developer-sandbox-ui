@@ -12,6 +12,12 @@ const NoPermissionsPage = lazy(
   () => import(/* webpackChunkName: "NoPermissionsPage" */ './NoPermissionsPage/NoPermissionsPage'),
 );
 
+const ExperimentalPage = lazy(
+  () => import(/* webpackChunkName: "ExperimentalPage" */ './ExperimentalPage/ExperimentalPage'),
+);
+
+const SHOW_EXPERIMENTAL = localStorage.getItem('dev-sandbox.experimental') === 'true';
+
 const routes = [
   {
     path: 'no-permissions',
@@ -26,6 +32,15 @@ const routes = [
     element: SandboxPage,
   },
 ];
+
+// enable this route by running localStorage.setItem('dev-sandbox.experimental', 'true') in browser console
+// and refresh the browser
+if (SHOW_EXPERIMENTAL) {
+  routes.push({
+    path: 'experimental',
+    element: ExperimentalPage,
+  });
+}
 
 interface RouteType {
   path?: string;

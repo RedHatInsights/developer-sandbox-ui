@@ -8,10 +8,14 @@ import {
 
 const axiosInstanceMock = {};
 jest.mock('../../services/registration-service');
-jest.mock('../../hooks/useAxios', () => ({
-  __esModule: true,
-  default: () => axiosInstanceMock,
-}));
+jest.mock('../../hooks/useAxios', () => {
+  const actual = jest.requireActual('../../hooks/useAxios');
+  return {
+    ...actual,
+    __esModule: true,
+    default: () => axiosInstanceMock,
+  };
+});
 
 describe('useRegistrationService', () => {
   afterEach(() => {

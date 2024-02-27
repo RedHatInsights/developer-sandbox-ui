@@ -44,12 +44,11 @@ export const useSandboxServices = () => {
       {
         id: 'red-hat-data-science',
         title: 'Red Hat',
-        subtitle: 'Data Science',
+        subtitle: 'OpenShift AI',
         description:
-          'Red Hat OpenShift Data Science is a part of the Red Hat OpenShift AI portfolio and provides tools across the AI/ML lifecycle.',
+          'OpenShift AI gives data scientists and developers a powerful AI/ML platform for building AI-enabled applications.',
         iconUrl: dataScienceUrl,
-        learnMoreUrl:
-          'https://developers.redhat.com/products/red-hat-openshift-data-science/overview',
+        learnMoreUrl: 'https://developers.redhat.com/products/red-hat-openshift-ai/overview ',
         launchUrl: signupData?.rhodsMemberURL,
       },
     ],

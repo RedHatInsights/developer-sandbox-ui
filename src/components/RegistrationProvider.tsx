@@ -12,9 +12,12 @@ import { useTrackEvent } from '../hooks/useTrackEvent';
 import { useRecaptcha } from '../hooks/useRecaptcha';
 import { LONG_INTERVAL, SHORT_INTERVAL } from '../utils/const';
 import useRegistrationService from '../hooks/useRegistrationService';
+import { useSetAtom } from 'jotai';
+import { registrationSignUpData } from '../state/registrationAtom';
 
 const RegistrationProvider = ({ children }: { children?: React.ReactNode }) => {
   useRecaptcha();
+  const setSignUpData = useSetAtom(registrationSignUpData);
   const track = useTrackEvent();
   const { getSignupData } = useRegistrationService();
 
@@ -90,6 +93,10 @@ const RegistrationProvider = ({ children }: { children?: React.ReactNode }) => {
     ],
     [error, signupData, showUserSignup, status, actions],
   );
+
+  React.useEffect(() => {
+    setSignUpData(signupData);
+  }, [signupData]);
 
   React.useEffect(() => {
     if (status === 'ready' && showModalOnReady) {
