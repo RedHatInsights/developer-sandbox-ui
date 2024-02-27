@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/RedHatInsights/developer-sandbox-ui.svg?branch=master)](https://travis-ci.org/RedHatInsights/developer-sandbox-ui)
 
+foo
 
 # Developer Sandbox Frontend
 
