@@ -4,6 +4,8 @@ import dataScienceUrl from '../images/Product_Icon-Red_Hat-OpenShift_Data_Scienc
 import devSpacesUrl from '../images/Product_Icon-Red_Hat-OpenShift_Dev_Spaces-RGB.svg';
 import { useRegistrationContext } from './useRegistrationContext';
 
+export const OPENSHIFT_AI_ID = 'red-hat-data-science';
+
 export type Service = {
   id: string;
   title: string;
@@ -42,7 +44,7 @@ export const useSandboxServices = () => {
         launchUrl: signupData?.cheDashboardURL,
       },
       {
-        id: 'red-hat-data-science',
+        id: OPENSHIFT_AI_ID,
         title: 'Red Hat',
         subtitle: 'OpenShift AI',
         description:
