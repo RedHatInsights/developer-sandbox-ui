@@ -16,9 +16,20 @@ type Props = {
   iconUrl: string;
   learnMoreUrl: string;
   launchUrl?: string;
+  showDisabledButton?: boolean;
+  helperText?: React.ReactElement;
 };
 
-const ServiceCard = ({ title, subtitle, description, iconUrl, learnMoreUrl, launchUrl }: Props) => (
+const ServiceCard = ({
+  title,
+  subtitle,
+  description,
+  iconUrl,
+  learnMoreUrl,
+  launchUrl,
+  showDisabledButton,
+  helperText,
+}: Props) => (
   <Card className="pf-u-h-100">
     <CardHeader>
       <img src={iconUrl} style={{ width: 48 }} className="pf-u-mr-md" />
@@ -29,9 +40,11 @@ const ServiceCard = ({ title, subtitle, description, iconUrl, learnMoreUrl, laun
     </CardHeader>
     <CardBody>{description}</CardBody>
     <CardFooter>
+      {helperText}
       {launchUrl ? (
         <AnalyticsButton
           component="a"
+          isDisabled={showDisabledButton}
           href={launchUrl}
           className="pf-u-mr-md"
           target="_blank"
