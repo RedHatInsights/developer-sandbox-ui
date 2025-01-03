@@ -23,4 +23,12 @@ describe('ServiceCard', () => {
     render(<ServiceCard description="" iconUrl="" learnMoreUrl="" subtitle="" title="" />);
     expect(screen.queryByRole('link', { name: 'Launch' })).not.toBeInTheDocument();
   });
+
+  it('should invoke the custom onclick function if provided', () => {
+    const mockCallBack = jest.fn();
+    render(<ServiceCard description="" iconUrl="" learnMoreUrl="" subtitle="" title="" onClickFunc={mockCallBack} />);
+    let button = screen.queryByText('Launch')
+    button?.click()
+    expect(mockCallBack).toHaveBeenCalled();
+  });
 });

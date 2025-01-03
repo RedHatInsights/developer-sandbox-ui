@@ -23,6 +23,7 @@ const ServiceCatalog = ({ isDisabled }: Props) => {
             <ServiceCard
               {...service}
               launchUrl={isDisabled ? undefined : service.launchUrl}
+              onClickFunc={service.onClickFunc}
               showDisabledButton={shouldDisableAI}
               {...(shouldDisableAI
                 ? {

@@ -18,6 +18,7 @@ type Props = {
   launchUrl?: string;
   showDisabledButton?: boolean;
   helperText?: React.ReactElement;
+  onClickFunc?: () => void;
 };
 
 const ServiceCard = ({
@@ -28,7 +29,7 @@ const ServiceCard = ({
   learnMoreUrl,
   launchUrl,
   showDisabledButton,
-  helperText,
+  helperText, onClickFunc,
 }: Props) => (
   <Card className="pf-v5-u-h-100">
     <CardHeader>
@@ -41,7 +42,7 @@ const ServiceCard = ({
     <CardBody>{description}</CardBody>
     <CardFooter>
       {helperText}
-      {launchUrl ? (
+      {launchUrl || onClickFunc ? (
         <AnalyticsButton
           component="a"
           isDisabled={showDisabledButton}
@@ -49,11 +50,12 @@ const ServiceCard = ({
           className="pf-v5-u-mr-md"
           target="_blank"
           rel="noopener"
+          onClick={onClickFunc}
           analytics={{
             event: 'DevSandbox Service Launch',
             properties: {
               name: `${title} ${subtitle}`,
-              url: launchUrl,
+              url: launchUrl ? "" : "",
             },
           }}
         >
