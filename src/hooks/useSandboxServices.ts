@@ -2,6 +2,7 @@ import * as React from 'react';
 import openShiftIconUrl from '../images/Product_Icon-Red_Hat-OpenShift-RGB.svg';
 import dataScienceUrl from '../images/Product_Icon-Red_Hat-OpenShift_Data_Science-RGB.svg';
 import devSpacesUrl from '../images/Product_Icon-Red_Hat-OpenShift_Dev_Spaces-RGB.svg';
+import rhelUrl from '../images/RHEL.svg';
 import { useRegistrationContext } from './useRegistrationContext';
 
 export const OPENSHIFT_AI_ID = 'red-hat-data-science';
@@ -52,6 +53,16 @@ export const useSandboxServices = () => {
         iconUrl: dataScienceUrl,
         learnMoreUrl: 'https://developers.redhat.com/products/red-hat-openshift-ai/overview ',
         launchUrl: signupData?.rhodsMemberURL,
+      },
+      {
+        id: 'ocp-virtualization',
+        title: 'Red Hat',
+        subtitle: 'OCP Virtualization',
+        description:
+            'A hybrid cloud-ready development platform to build, deploy and run applications securely and containerize them for deployment.',
+        iconUrl: rhelUrl,
+        learnMoreUrl: 'https://developers.redhat.com/products/rhel/overview',
+        launchUrl: `${signupData?.consoleURL}/k8s/ns/${signupData?.defaultUserNamespace}/virtualization-overview`,
       },
     ],
     [signupData],
