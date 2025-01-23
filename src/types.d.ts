@@ -9,4 +9,5 @@ export type SignupData = {
   rhodsMemberURL: string;
   compliantUsername: string;
   defaultUserNamespace: string;
+  proxyURL: string;
 };
