@@ -216,7 +216,7 @@ const ServiceCatalog = ({ isDisabled }: Props) => {
             const volumeClaim = k8sObject.spec.volumeClaimTemplates[vck];
             const pvcs = await getPersistentVolumeClaims(
               userNamespace,
-              '?labelSelector=app.kubernetes.io%2Fname%3D' + volumeClaim.metadata.name,
+              'app.kubernetes.io%2Fname%3D' + volumeClaim.metadata.name,
             );
             // the pvc name of a steatefulset is composed by statefulsetname and pvc name from the template
             if (pvcs != undefined && pvcs.items.length > 0) {

@@ -1,9 +1,9 @@
 import { AxiosInstance } from 'axios';
 
 function projectDeploymentUrl(namespace: string, labelSelector?: string) {
-  const url = new URL(`/apis/apps/v1/namespaces/${namespace}/deployments`);
+  let url = `/apis/apps/v1/namespaces/${namespace}/deployments`;
   if (labelSelector) {
-    url.searchParams.append('labelSelector', labelSelector);
+    url += `?labelSelector=${labelSelector}`;
   }
   return url;
 }
@@ -57,14 +57,14 @@ export const getDeployments = async (
   labels?: string,
 ) => {
   const url = projectDeploymentUrl(namespace, labels);
-  const { data } = await axiosInstance.get<DeploymentData>(url.toString());
+  const { data } = await axiosInstance.get<DeploymentData>(url);
   return data;
 };
 
 function projectPersistentVolumeClaimUrl(namespace: string, labelSelector?: string) {
-  const url = new URL(`/api/v1/namespaces/${namespace}/persistentvolumeclaims`);
+  let url = `/api/v1/namespaces/${namespace}/persistentvolumeclaims`;
   if (labelSelector) {
-    url.searchParams.append('labelSelector', labelSelector);
+    url += `?labelSelector=${labelSelector}`;
   }
   return url;
 }
@@ -90,14 +90,14 @@ export const getPersistentVolumeClaims = async (
   labels?: string,
 ) => {
   const url = projectPersistentVolumeClaimUrl(namespace, labels);
-  const { data } = await axiosInstance.get<PersistentVolumeClaimData>(url.toString());
+  const { data } = await axiosInstance.get<PersistentVolumeClaimData>(url);
   return data;
 };
 
 function projectStatefulSetUrl(namespace: string, labelSelector?: string) {
-  const url = new URL(`/apis/apps/v1/namespaces/${namespace}/statefulsets`);
+  let url = `/apis/apps/v1/namespaces/${namespace}/statefulsets`;
   if (labelSelector) {
-    url.searchParams.append('labelSelector', labelSelector);
+    url += `?labelSelector=${labelSelector}`;
   }
   return url;
 }
@@ -156,7 +156,7 @@ export const getStatefulSets = async (
   labels?: string,
 ) => {
   const url = projectStatefulSetUrl(namespace, labels);
-  const { data } = await axiosInstance.get<StatefulSetData>(url.toString());
+  const { data } = await axiosInstance.get<StatefulSetData>(url);
   return data;
 };
 
