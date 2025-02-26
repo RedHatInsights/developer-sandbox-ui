@@ -46,8 +46,10 @@ export const useSandboxServices = (handleShowAAPModal: () => void): Service[] =>
       await axiosInstance
         .patch(
           `/apis/aap.ansible.com/v1alpha1/namespaces/${signupData.defaultUserNamespace}/ansibleautomationplatforms/${data.items[0].metadata.name}`,
-          JSON.parse('[{"op": "replace", "path": "/spec/idle_aap", "value": "false"}]'),
-          {},
+          JSON.parse('{"spec":{"idle_aap":false}}'),
+          {
+            headers: { 'Content-type': 'application/merge-patch+json' },
+          },
         )
         .catch((reason: AxiosError) => {
           api.setError(errorMessage(reason) || 'Error while resuming instance. Please try again.');

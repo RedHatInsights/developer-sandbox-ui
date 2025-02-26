@@ -87,10 +87,8 @@ const AAPLaunchButton = (props: { onClick: () => void }) => {
   return (
     <>
       <Button
-        className={'pf-v5-u-mr-xl'}
-        variant="primary"
-        size="sm"
-        component="span"
+        className={'pf-v5-u-mr-md'}
+        component="a"
         isInline
         onClick={props.onClick}
         aria-label="Launch"
