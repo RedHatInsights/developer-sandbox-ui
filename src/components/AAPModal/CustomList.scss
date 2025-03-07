@@ -1,0 +1,67 @@
+.instructions__list {
+  counter-reset: instructions;
+  list-style: none;
+  margin-left: 0 !important;
+  max-width: 800px;
+  padding-left: 0 !important;
+
+  // showing list style items as nested numbers for ordered lists (ol) inside instructions
+  // Example: 1.1, 1.2, 1.3 etc.
+  ol {
+    counter-reset: instructions;
+    list-style-type: none;
+
+    li {
+      counter-increment: instructions;
+
+      &::marker {
+        content: counters(instructions, '.') ' ';
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+.instructions__list-item {
+  counter-increment: instructions;
+  display: flex;
+  margin: 0 0 var(--pf-v5-global--spacer--xl);
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--pf-v5-global--BorderColor--100);
+    padding-bottom: var(--pf-v5-global--spacer--xl);
+  }
+
+  &::before {
+    border: 2px solid var(--pf-v5-global--BorderColor--100);
+    border-radius: 100%;
+    content: counter(instructions);
+    flex-shrink: 0;
+    font-size: 28px;
+    height: var(--pf-v5-global--spacer--2xl);
+    text-align: center;
+    width: var(--pf-v5-global--spacer--2xl);
+  }
+
+  &-simple {
+    counter-increment: instructions;
+    display: flex;
+
+    &:not(:last-child) {
+      margin-bottom: var(--pf-v5-global--spacer--xl);
+    }
+
+    &::before {
+      content: 'Step ' counter(instructions) ':';
+      flex-shrink: 0;
+      padding-right: var(--pf-v5-global--spacer--lg);
+      white-space: nowrap;
+      font-size: var(--pf-v5-c-title--m-lg--FontSize);
+      font-weight: bold;
+    }
+  }
+
+  &-contents {
+    margin: 0 0 0 var(--pf-v5-global--spacer--xl);
+  }
+}

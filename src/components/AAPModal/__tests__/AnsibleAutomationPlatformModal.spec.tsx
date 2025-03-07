@@ -85,7 +85,7 @@ describe('AnsibleAutomationPlatformModal', () => {
     const { getByText } = within(screen.getByTestId('modal-content'));
     expect(
       getByText(
-        'Your AAP instance might take up to 30 minutes to provision. Once ready, your instance will remain active for 12 hours.',
+        'Provisioning can take up to 30 minutes. When ready, your instance will remain active for 11 hours.',
       ),
     ).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'AAP documentation' })).toHaveAttribute(
@@ -146,7 +146,7 @@ describe('AnsibleAutomationPlatformModal', () => {
       // copy password button should be there
       expect(screen.queryByRole('Copy password')).toBeDefined();
       // open UI button should be there
-      const openAAPUIButton = screen.queryByText('Go to Ansible Automation Platform');
+      const openAAPUIButton = screen.queryByText('Log in to Ansible Automation Platform');
       // when clicked, it should open the UI link from the AAP CR
       openAAPUIButton?.click();
       expect(window.open).toHaveBeenCalledTimes(1);
