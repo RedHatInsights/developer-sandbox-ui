@@ -387,7 +387,7 @@ const ServiceCatalog = ({ isDisabled }: Props) => {
     } catch (e) {
       api.setError(errorMessage(e));
     }
-  }, []);
+  }, [auth, signupData]);
 
   React.useEffect(() => {
     const handle = setInterval(getAAPDataFn, SHORT_INTERVAL);
