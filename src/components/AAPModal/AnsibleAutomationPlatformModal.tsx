@@ -61,14 +61,14 @@ function AnsibleAutomationPlatformProvisioningModalContent(props: {
         </Text>
         <br />
         <Text component={TextVariants.p} data-testid="modal-content-docs">
-          While you wait, consider exploring the
+          New to Ansible Automation Platform? Get up to speed with our
           <a
-            className={'pf-v5-u-ml-xs'}
+            className={'pf-v5-u-ml-xs pf-v5-u-mr-xs'}
             target="_blank"
             rel="noreferrer"
-            href={'https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform'}
+            href={'http://red.ht/ansibledevsandboxpath'}
           >
-            AAP documentation
+            introductory learning path
           </a>
           <ExternalLinkAltIcon></ExternalLinkAltIcon>.
         </Text>

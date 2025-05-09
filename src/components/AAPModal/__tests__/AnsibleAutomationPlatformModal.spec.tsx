@@ -96,9 +96,9 @@ describe('AnsibleAutomationPlatformModal', () => {
         `${provisioningLabel} can take up to 30 minutes. When ready, your instance will remain active for several hours.`,
       ),
     ).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'AAP documentation' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'introductory learning path' })).toHaveAttribute(
       'href',
-      'https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform',
+      'http://red.ht/ansibledevsandboxpath',
     );
     // spinner should be there
     const progressBar = screen.getByRole('progressbar');

@@ -11,3 +11,7 @@ export type SignupData = {
   defaultUserNamespace: string;
   proxyURL: string;
 };
+
+export type UiConfigData = {
+  uiCanaryDeploymentWeight: number;
+};

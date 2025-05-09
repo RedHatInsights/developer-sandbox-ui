@@ -1,6 +1,7 @@
 import {
   completePhoneVerification,
   getSignupData,
+  getUIConfigData,
   initiatePhoneVerification,
   signup,
 } from '../services/registration-service';
@@ -19,6 +20,8 @@ const useRegistrationService = () => {
 
     completePhoneVerification: async (code: string) =>
       completePhoneVerification(axiosInstance, code),
+
+    getUIConfigData: () => getUIConfigData(axiosInstance),
   };
 };
 

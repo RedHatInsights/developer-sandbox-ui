@@ -1,12 +1,15 @@
 import axios, { AxiosInstance } from 'axios';
 import { recaptchaApiKey } from '../utils/recaptcha';
-import { SignupData } from '../types';
+import { SignupData, UiConfigData } from '../types';
 
 // signup endpoint
 const signupURL = '/api/v1/signup';
 
 // phone verification endpoint
 const phoneVerificationURL = '/api/v1/signup/verification';
+
+// uiconfig endpoint
+const uiconfigURL = '/api/v1/uiconfig';
 
 export const getSignupData = async (
   axiosInstance: AxiosInstance,
@@ -86,3 +89,19 @@ export const completePhoneVerification = async (axiosInstance: AxiosInstance, co
 export const isValidCountryCode = (countryCode: string) => /^[+]?[0-9]+$/.test(countryCode);
 export const isValidPhoneNumber = (phoneNumber: string) =>
   /^[(]?[0-9]+[)]?[-\s.]?[0-9]+[-\s./0-9]*$/im.test(phoneNumber);
+
+export const getUIConfigData = async (
+  axiosInstance: AxiosInstance,
+): Promise<UiConfigData | undefined> => {
+  try {
+    const { data } = await axiosInstance.get<UiConfigData>(uiconfigURL);
+    return data;
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      if (e.response?.status === 404) {
+        return undefined;
+      }
+    }
+    throw e;
+  }
+};

@@ -2,6 +2,7 @@ import useRegistrationService from '../useRegistrationService';
 import {
   completePhoneVerification,
   getSignupData,
+  getUIConfigData,
   initiatePhoneVerification,
   signup,
 } from '../../services/registration-service';
@@ -32,6 +33,12 @@ describe('useRegistrationService', () => {
     const { getSignupData: testFn } = useRegistrationService();
     testFn();
     expect(getSignupData).toHaveBeenCalledWith(axiosInstanceMock);
+  });
+
+  it('should delegate to getUIConfigData with axios instance', () => {
+    const { getUIConfigData: testFn } = useRegistrationService();
+    testFn();
+    expect(getUIConfigData).toHaveBeenCalledWith(axiosInstanceMock);
   });
 
   it('should delegate to initiatePhoneVerification with axios instance', () => {
