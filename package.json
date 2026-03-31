@@ -23,7 +23,7 @@
     "@patternfly/react-core": "^5.0.0",
     "@patternfly/react-icons": "^5.0.0",
     "@redhat-cloud-services/frontend-components": "^4.0.7",
-    "@redhat-cloud-services/frontend-components-notifications": "4.0.0",
+    "@redhat-cloud-services/frontend-components-notifications": "6.5.0",
     "@redhat-cloud-services/frontend-components-utilities": "^4.0.0",
     "@unleash/proxy-client-react": "^4.2.2",
     "axios": "^0.27.2",
